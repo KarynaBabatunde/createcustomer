@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Karyna Babatunde</title>
+    <meta charset="UTF-8" />
+    <link href="src/styles.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+  </head>
+  </head>
+  <body>
+  
+  <div class="container">
+  <header>Create a Customer</header>
+  <form action="">
+    <input type="text" placeholder="Name and Surname" class="customer-input" />
+    <button type="button" id="customer-button" class="btn btn-info">Create</button>
+  </form>
+  <div class="customer-container">
+    <ul class="customer-list"></ul>
+  </div>
+
+  <br />
+  <br />
+  <a href="company.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">next</a>
+</div>
+  <body>
+    <script src="src/index.js"></script>
+  </body>
+  <script>
+  const customerInput = document.querySelector(".customer-input");
+const customerButton = document.querySelector("#customer-button");
+const customerList = document.querySelector(".customer-list");
+
+document.addEventListener("DOMContentLoaded", getLocalCustomers);
+customerButton.addEventListener("click", addCustomer);
+
+function addCustomer(event) {
+ event.preventDefault();
+ const addDiv = document.createElement("div");
+ addDiv.classList.add("customer");
+ const newCustomer = document.createElement("li");
+ newCustomer.innerText = customerInput.value;
+ newCustomer.classList.add("customer-item");
+ addDiv.appendChild(newCustomer);
+ saveLocalCustomers(customerInput.value);
+
+ customerList.appendChild(addDiv);
+ customerInput.value = "";
+}
+ function saveLocalCustomers(customer) {
+   let customers; 
+  if(localStorage.getItem("customers") === null) {
+  customers = [];
+} else {customers = JSON.parse(localStorage.getItem("customers"));
+}
+customers.push(customer);
+localStorage.setItem("customers", JSON.stringify(customers));
+}
+
+function getLocalCustomers() {
+  let customers;
+  if (localStorage.getItem("customers") === null) {
+    customers = [];
+  }
+else {
+  customers = JSON.parse(localStorage.getItem("customers"));
+  }
+customers.forEach(function(customer) {
+  const addDiv = document.createElement("div");
+  addDiv.classList.add("customer");
+  const newCustomer = document.createElement("li");
+  newCustomer.innerText = customer;
+  newCustomer.classList.add("customer-item");
+  addDiv.appendChild(newCustomer);
+
+  customerList.appendChild(addDiv);
+});
+}
+
+function removeLocalCustomer(customer) {
+    let customers;
+    if(localStorage.getItem("customers") === null) {
+        customers = [];
+    } else {
+        customers = JSON.parse(localStorage.getItem("todos"));
+    }
+
+    const customerIndex = customer.children[0].innerText;
+    customers.splice(customers.indexOf(customerIndex), 1);
+    localStorage.setItem("customers", JSON.stringify(customers));
+}
+
+</script>
+</html>
